@@ -1226,8 +1226,7 @@ class DVGeometryCST(BaseDVGeometry):
         yUpper = DVGeometryCST.computeCSTCoordinates(x, N1, N2, upperCoeff, 0.0)
         yLower = DVGeometryCST.computeCSTCoordinates(x, N1, N2, lowerCoeff, 0.0)
 
-        ax.plot(x, yUpper, **kwargs)
-        ax.plot(x, yLower, **kwargs)
+        ax.plot(np.hstack((x, x[::-1])), np.hstack((yUpper, yLower[::-1])), **kwargs)
         ax.set_aspect("equal")
 
         return ax
