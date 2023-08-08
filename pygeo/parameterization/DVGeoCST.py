@@ -1190,7 +1190,7 @@ class DVGeometryCST(BaseDVGeometry):
         return w
 
     @staticmethod
-    def plotCST(upperCoeff, lowerCoeff, N1=0.5, N2=1.0, yte=0.0, nPts=100, ax=None, **kwargs):
+    def plotCST(upperCoeff, lowerCoeff, N1_upper=0.5, N1_lower=0.5, N2_upper=1.0, N2_lower=1.0, yte=0.0, nPts=100, ax=None, **kwargs):
         """Simple utility to generate a plot from CST coefficients.
 
         Parameters
@@ -1199,10 +1199,14 @@ class DVGeometryCST(BaseDVGeometry):
             One dimensional array of CST coefficients for the upper surface.
         lowerCoeff : ndarray
             One dimensional array of CST coefficients for the lower surface.
-        N1 : float
-            First class shape parameter.
-        N2 : float
-            Second class shape parameter.
+        N1_upper : float
+            First class shape parameter for the upper surface.
+        N1_lower : float
+            First class shape parameter for the lower surface.
+        N2_upper : float
+            Second class shape parameter for the upper surface.
+        N2_lower : float
+            Second class shape parameter for the lower surface.
         yte : float
             y coordinate of the trailing edge (used to define trailing edge thickness).
             Note that the trailing edge will be twice this thick, assuming the same ``yte``
@@ -1227,8 +1231,8 @@ class DVGeometryCST(BaseDVGeometry):
             ax = plt.gca()
 
         x = np.linspace(0, 1, nPts)
-        yUpper = DVGeometryCST.computeCSTCoordinates(x, N1, N2, upperCoeff, yte)
-        yLower = DVGeometryCST.computeCSTCoordinates(x, N1, N2, lowerCoeff, -yte)
+        yUpper = DVGeometryCST.computeCSTCoordinates(x, N1_upper, N2_upper, upperCoeff, yte)
+        yLower = DVGeometryCST.computeCSTCoordinates(x, N1_lower, N2_lower, lowerCoeff, -yte)
 
         ax.plot(np.hstack((x, x[::-1])), np.hstack((yUpper, yLower[::-1])), **kwargs)
         ax.set_aspect("equal")
